@@ -2,7 +2,7 @@
 
 Autor: Otávio Henrique Santana Azevedo  
 Local: Salvador – BA  
-Objetivo: Atuar com Infraestrutura / DevOps, focando em serviços web, automação e observabilidade.
+Objetivo: Atuar com Infraestrutura / DevOps, focando em serviços web, automação, monitoramento e alta disponibilidade.
 
 ---
 
@@ -13,7 +13,7 @@ Experiência na instalação, configuração e integração do SonarQube com o G
 - Ajuste de **Server base URL**, configuração de rede (DNS / `/etc/hosts`) e certificados.
 - Criação de **Application OAuth** no GitLab e configuração do SonarQube para autenticação via GitLab (SSO / OAuth2).
 - Uso de **Personal Access Tokens** e configuração de **DevOps Platform Integrations → GitLab** no SonarQube.
-- Documentação interna completa do processo em guia próprio: *“Integração SonarQube com autenticação no Gitlab – Versão 16.1”*. :contentReference[oaicite:0]{index=0}  
+- Documentação interna completa do processo em guia próprio: *“Integração SonarQube com autenticação no Gitlab – Versão 16.1”*.  
 
 ---
 
@@ -71,11 +71,24 @@ Experiência na instalação, configuração e integração do SonarQube com o G
 
 ---
 
+## Balanceadores de Carga (Apache + mod_proxy / mod_jk)
+
+- Configuração do **Apache como balanceador de carga** utilizando:
+  - **mod_proxy / mod_proxy_balancer** (HTTP/HTTPS);
+  - **mod_jk** para balancear aplicações Java em **Tomcat / JBoss**.
+- Criação de pools de servidores backend, sticky sessions e health checks básicos.
+- Ajuste de timeouts, parâmetros de balanceamento e páginas de erro amigáveis.
+- Elaboração de tutoriais internos:
+  - *Configuração de mod_jk para Tomcat/JBoss*;
+  - *Configurando Apache como Balanceador de Carga com mod_proxy*.
+
+---
+
 ## Tomcat
 
 - Instalação e configuração do **Apache Tomcat** em Linux.
 - Deploy de aplicações Java (WAR), ajuste de contextos e memória.
-- Integração Tomcat + Nginx/Apache como reverse proxy.
+- Integração Tomcat + Nginx/Apache (incluindo cenários com mod_jk).
 - Troubleshooting básico (logs, HTTP 5xx, problemas de conexão).
 
 ---
@@ -105,8 +118,9 @@ Atuação prática em:
 - Sistemas Linux em produção;
 - Serviços web (Nginx, Apache, Tomcat, JBoss, XWiki);
 - Ferramentas de CI/CD (Jenkins, GitLab);
-- Monitoração (Observium, Zabbix);
-- Ferramentas de qualidade e integração com DevOps (SonarQube + GitLab);
+- Monitoramento (Observium, Zabbix);
+- Qualidade de código e integração com DevOps (SonarQube + GitLab);
+- **Balanceamento de carga com Apache (mod_proxy / mod_jk)**;
 - Automação de tarefas rotineiras via scripts em shell.
 
 Este repositório **infra-study** registra meus estudos, laboratórios e guias técnicos relacionados a essas tecnologias.
