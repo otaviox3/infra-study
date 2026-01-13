@@ -17,10 +17,13 @@ Objetivo: organizar meus labs, registros e anotações sobre serviços web, moni
 - 🧾 **Resumos de configurações reais que já implementei**
 
   - SonarQube + GitLab (autenticação / DevOps Integration)  
-    → [docs/sonarqube-gitlab-auth.md](./docs/sonarqube-gitlab-auth.md) :contentReference[oaicite:4]{index=4}  
+    → [docs/sonarqube-gitlab-auth.md](./docs/sonarqube-gitlab-auth.md) :contentReference[oaicite:9]{index=9}  
 
   - Apache HTTPD como balanceador para aplicações Java com mod_jk  
-    → [docs/apache-modjk-balanceador.md](./docs/apache-modjk-balanceador.md) :contentReference[oaicite:5]{index=5}  
+    → [docs/apache-modjk-balanceador.md](./docs/apache-modjk-balanceador.md) :contentReference[oaicite:10]{index=10}  
+
+  - Apache HTTPD como balanceador HTTP/HTTPS com mod_proxy / mod_proxy_balancer  
+    → [docs/apache-modproxy-balanceador.md](./docs/apache-modproxy-balanceador.md) :contentReference[oaicite:11]{index=11}  
 
   - (planejado) XWiki + LDAP  
     → `docs/xwiki-ldap.md`
@@ -42,8 +45,8 @@ Objetivo: organizar meus labs, registros e anotações sobre serviços web, moni
 - SCM / CI/CD: **GitLab, Jenkins**
 - Monitoramento: **Observium, Zabbix**
 - Balanceadores de carga:
-  - Apache HTTPD com **mod_proxy / mod_proxy_balancer**
-  - Apache HTTPD com **mod_jk** (AJP 1.3) para Tomcat/JBoss :contentReference[oaicite:6]{index=6}  
+  - Apache HTTPD com **mod_proxy / mod_proxy_balancer** (HTTP/HTTPS); :contentReference[oaicite:12]{index=12}  
+  - Apache HTTPD com **mod_jk** (AJP 1.3) para Tomcat/JBoss; :contentReference[oaicite:13]{index=13}  
 - Sistema operacional: **Linux (Ubuntu/Debian e CentOS/RHEL)**
 
 ---
