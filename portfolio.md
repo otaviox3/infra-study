@@ -2,24 +2,25 @@
 
 Autor: Otávio Henrique Santana Azevedo  
 Local: Salvador – BA  
-Objetivo: Atuar com Infraestrutura / DevOps, focando em serviços web, automação, monitoramento e alta disponibilidade.
+Objetivo: Atuar com Infraestrutura / DevOps, focando em serviços web, automação, monitoramento, autenticação corporativa e alta disponibilidade.
 
 ---
 
 ## SonarQube + GitLab
 
-Experiência na instalação, configuração e integração do SonarQube com o GitLab:
+Experiência na instalação, configuração e integração do **SonarQube** com **GitLab**:
 
 - Ajuste de **Server base URL**, configuração de rede (DNS / `/etc/hosts`) e certificados.
 - Criação de **Application OAuth** no GitLab e configuração do SonarQube para autenticação via GitLab (SSO / OAuth2).
 - Uso de **Personal Access Tokens** e configuração de **DevOps Platform Integrations → GitLab** no SonarQube.
-- Documentação interna completa do processo em guia próprio: *“Integração SonarQube com autenticação no Gitlab – Versão 16.1”*.  
+- Documentação interna completa do processo em guia próprio:  
+  *“Integração SonarQube com autenticação no Gitlab – Versão 16.1”*. :contentReference[oaicite:0]{index=0}  
 
 ---
 
 ## XWiki + Autenticação LDAP
 
-- Instalação e configuração do XWiki em ambiente Linux (Debian/Ubuntu).
+- Instalação e configuração do **XWiki** em ambiente Linux (Debian/Ubuntu).
 - Integração com **LDAP** para autenticação centralizada de usuários.
 - Ajustes de conexão, filtros de busca, grupos e permissões.
 - Manutenção de instância em produção (atualizações, backup, tuning básico).
@@ -28,7 +29,7 @@ Experiência na instalação, configuração e integração do SonarQube com o G
 
 ## Observium
 
-- Implantação do Observium para monitoramento de rede e servidores.
+- Implantação do **Observium** para monitoramento de rede e servidores.
 - Descoberta automática de hosts, configuração de SNMP e organização por grupos.
 - Acompanhamento de gráficos de utilização (CPU, memória, banda, disco).
 - Criação de alertas básicos (thresholds) para recursos críticos.
@@ -46,7 +47,7 @@ Experiência na instalação, configuração e integração do SonarQube com o G
 
 ## GitLab
 
-- Instalação e administração de instância GitLab self-hosted.
+- Instalação e administração de instância **GitLab self-hosted**.
 - Criação e manutenção de **projetos, grupos e permissões**.
 - Configuração básica de **runners** (Shell / Docker) para CI/CD.
 - Integrações com ferramentas externas (SonarQube, Jenkins, etc.).
@@ -66,38 +67,39 @@ Experiência na instalação, configuração e integração do SonarQube com o G
 
 - Instalação e configuração do **Apache HTTP Server**.
 - Criação de **vhosts**, proxy para aplicações (Tomcat/JBoss/PHP).
-- Configuração de módulos (rewrite, ssl etc.).
-- Migração e comparação de cenários Nginx vs Apache.
+- Configuração de módulos (rewrite, ssl, deflate etc.).
+- Comparação e migração de cenários Nginx vs Apache conforme necessidade da aplicação.
 
 ---
 
 ## Balanceadores de Carga (Apache + mod_proxy / mod_jk)
 
-- Configuração do **Apache como balanceador de carga** utilizando:
-  - **mod_proxy / mod_proxy_balancer** (HTTP/HTTPS);
-  - **mod_jk** para balancear aplicações Java em **Tomcat / JBoss**.
-- Criação de pools de servidores backend, sticky sessions e health checks básicos.
-- Ajuste de timeouts, parâmetros de balanceamento e páginas de erro amigáveis.
-- Elaboração de tutoriais internos:
-  - *Configuração de mod_jk para Tomcat/JBoss*;
-  - *Configurando Apache como Balanceador de Carga com mod_proxy*.
+- Configuração do **Apache como balanceador de carga**, em dois cenários:
+  - HTTP/HTTPS usando **mod_proxy / mod_proxy_balancer**;
+  - Aplicações Java (Tomcat / JBoss) usando **mod_jk** e protocolo **AJP 1.3**.
+- Definição de pools de backends, sticky sessions, logs separados e páginas de status.
+- Uso do **JK Status Manager** para acompanhar o estado dos nós e gerenciar o cluster. :contentReference[oaicite:1]{index=1}  
+- Elaboração de documentação interna sobre:
+  - hardening de Apache (headers de segurança, MPM event, compressão com mod_deflate);
+  - balanceamento entre várias instâncias JBoss/Tomcat;
+  - estratégias de escala vertical e horizontal dos balanceadores.
 
 ---
 
 ## Tomcat
 
-- Instalação e configuração do **Apache Tomcat** em Linux.
+- Instalação e configuração de **Apache Tomcat** em Linux.
 - Deploy de aplicações Java (WAR), ajuste de contextos e memória.
 - Integração Tomcat + Nginx/Apache (incluindo cenários com mod_jk).
-- Troubleshooting básico (logs, HTTP 5xx, problemas de conexão).
+- Troubleshooting básico (logs, HTTP 5xx, problemas de conexão e sessão).
 
 ---
 
 ## JBoss
 
-- Instalação e configuração de instância **JBoss / WildFly**.
+- Instalação e configuração de instâncias **JBoss / WildFly**.
 - Deploy de aplicações Java EE.
-- Integração com servidores web (Apache/Nginx) via HTTP/ajp.
+- Integração com Apache (mod_jk / HTTP) para exposição externa.
 - Gestão de logs, datasources e parâmetros de JVM.
 
 ---
@@ -119,8 +121,8 @@ Atuação prática em:
 - Serviços web (Nginx, Apache, Tomcat, JBoss, XWiki);
 - Ferramentas de CI/CD (Jenkins, GitLab);
 - Monitoramento (Observium, Zabbix);
-- Qualidade de código e integração com DevOps (SonarQube + GitLab);
-- **Balanceamento de carga com Apache (mod_proxy / mod_jk)**;
+- Qualidade de código e integração com DevOps (SonarQube + GitLab); :contentReference[oaicite:2]{index=2}  
+- **Balanceamento de carga com Apache (mod_proxy / mod_proxy_balancer / mod_jk)**; :contentReference[oaicite:3]{index=3}  
 - Automação de tarefas rotineiras via scripts em shell.
 
-Este repositório **infra-study** registra meus estudos, laboratórios e guias técnicos relacionados a essas tecnologias.
+Este repositório **infra-study** registra meus estudos, laboratórios e resumos técnicos relacionados a essas tecnologias.
