@@ -4,7 +4,7 @@ Repositório de estudos e **resumos de experiência** em Infraestrutura / DevOps
 
 Autor: **Otávio Azevedo**
 
-Objetivo: organizar meus labs, registros e anotações sobre serviços web, monitoramento,
+Objetivo: Registrar e fazer anotações sobre serviços web, monitoramento,
 autenticação corporativa, balanceadores de carga e ferramentas de CI/CD que utilizo no
 dia a dia (SonarQube, GitLab, XWiki, Observium, Jenkins, Apache, Nginx, etc.), na operação
 de **mais de 100 servidores Linux e Windows** em ambiente de produção, com foco em evolução
