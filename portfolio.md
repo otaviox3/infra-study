@@ -1,6 +1,7 @@
 # Portfólio de Infra / DevOps
 
 Autor: Otávio Azevedo  
+
 Objetivo: Atuar com Infraestrutura / DevOps, focando em serviços web, automação, monitoramento, autenticação corporativa e alta disponibilidade.
 
 ---
@@ -12,17 +13,28 @@ Experiência na instalação, configuração e integração do **SonarQube** com
 - Ajuste de **Server base URL**, configuração de rede (DNS / `/etc/hosts`) e certificados.
 - Criação de **Application OAuth** no GitLab e configuração do SonarQube para autenticação via GitLab (SSO / OAuth2).
 - Uso de **Personal Access Tokens** e configuração de **DevOps Platform Integrations → GitLab** no SonarQube.
-- Documentação interna completa do processo em guia próprio:  
-  *“Integração SonarQube com autenticação no Gitlab – Versão 16.1”*. :contentReference[oaicite:4]{index=4}  
+- Documentação interna completa do processo em guia próprio sobre integração SonarQube + GitLab.
 
 ---
 
-## XWiki + Autenticação LDAP
+## XWiki (Tomcat 9 + MariaDB + Apache2 + LDAP)
 
-- Instalação e configuração do **XWiki** em ambiente Linux (Debian/Ubuntu).
-- Integração com **LDAP** para autenticação centralizada de usuários.
-- Ajustes de conexão, filtros de busca, grupos e permissões.
-- Manutenção de instância em produção (atualizações, backup, tuning básico).
+- Instalação e configuração do **XWiki** em **Debian/Ubuntu** usando:
+  - **Tomcat 9** como container de aplicação;
+  - **MariaDB** como banco de dados;
+  - **Apache2** como proxy reverso com HTTPS (Let’s Encrypt) na frente do Tomcat.
+- Conclusão do wizard inicial, instalação de flavor padrão e preparação da wiki para uso corporativo.
+- Integração com **LDAP/Active Directory**:
+  - configuração de autenticador LDAP;
+  - mapeamento de atributos (login, nome, sobrenome, e-mail, grupos);
+  - criação automática de usuários a partir do diretório.
+- Ajustes de URLs e comportamento:
+  - XWiki respondendo em `/` (sem `/xwiki` na URL);
+  - configuração de `xwiki.home`, `xwiki.url.protocol` e `xwiki.webapppath`.
+- Uso de Apache como camada de segurança:
+  - HTTPS obrigatório;
+  - proxy reverso para o Tomcat;
+  - logs dedicados para o domínio da wiki.
 
 ---
 
@@ -74,10 +86,10 @@ Experiência na instalação, configuração e integração do **SonarQube** com
 ## Balanceadores de Carga (Apache + mod_proxy / mod_jk)
 
 - Configuração do **Apache como balanceador de carga** em dois cenários principais:
-  - HTTP/HTTPS usando **mod_proxy / mod_proxy_balancer** para múltiplos backends (APIs, aplicações web, etc.); :contentReference[oaicite:5]{index=5}  
-  - Aplicações Java (Tomcat / JBoss) usando **mod_jk** e protocolo **AJP 1.3**, com sticky session e JK Status Manager. :contentReference[oaicite:6]{index=6}  
+  - HTTP/HTTPS usando **mod_proxy / mod_proxy_balancer** para múltiplos backends (APIs, aplicações web, etc.);
+  - Aplicações Java (Tomcat / JBoss) usando **mod_jk** e protocolo **AJP 1.3**, com sticky session e JK Status Manager.
 - Definição de pools de backends, sticky sessions, logs separados e páginas de status/gerenciamento.
-- Elaboração de documentação interna sobre:
+- Documentação interna sobre:
   - hardening de Apache (headers de segurança, MPM event, compressão com mod_deflate);
   - estratégias de escala vertical e horizontal dos balanceadores;
   - proteção de interfaces administrativas (`/balancer-manager`, `/jkstatus`).
@@ -111,6 +123,16 @@ Experiência na instalação, configuração e integração do **SonarQube** com
 
 ---
 
+## Scripts de Automação (PHP 7.4 + Oracle)
+
+- Criação de scripts em **bash** para automatizar instalação de:
+  - **PHP 7.4** em Ubuntu 22.04+ e 24.04+;
+  - **Oracle Instant Client** (basic, sdk, sqlplus);
+  - extensões **OCI8** e **PDO_OCI** compiladas para PHP 7.4.33.
+- Pensados para ambientes legados que ainda dependem de PHP 7.4 com conexão Oracle.
+
+---
+
 ## Resumo
 
 Atuação prática em:
@@ -119,8 +141,9 @@ Atuação prática em:
 - Serviços web (Nginx, Apache, Tomcat, JBoss, XWiki);
 - Ferramentas de CI/CD (Jenkins, GitLab);
 - Monitoramento (Observium, Zabbix);
-- Qualidade de código e integração com DevOps (SonarQube + GitLab); :contentReference[oaicite:7]{index=7}  
-- **Balanceamento de carga com Apache (mod_proxy / mod_proxy_balancer / mod_jk)**;   
+- Qualidade de código e integração com DevOps (SonarQube + GitLab);
+- **Balanceamento de carga com Apache (mod_proxy / mod_proxy_balancer / mod_jk)**;
+- Integração PHP 7.4 + Oracle (OCI8/PDO_OCI) via scripts;
 - Automação de tarefas rotineiras via scripts em shell.
 
 Este repositório **infra-study** registra meus estudos, laboratórios e resumos técnicos relacionados a essas tecnologias.
