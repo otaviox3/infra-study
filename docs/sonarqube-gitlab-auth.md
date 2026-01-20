@@ -1,6 +1,6 @@
 # SonarQube + GitLab Authentication (Resumo de Experiência)
 
-Autor: Otávio Henrique Santana Azevedo  
+Autor: Otávio Azevedo  
 Data: 2025-02-24  
 Documento de referência interno: **"Integração SonarQube com autenticação no Gitlab – Versão 16.1"**.
 

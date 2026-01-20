@@ -1,6 +1,6 @@
 # Portfólio de Infra / DevOps
 
-Autor: Otávio Henrique Santana Azevedo  
+Autor: Otávio Azevedo  
 Local: Salvador – BA  
 Objetivo: Atuar com Infraestrutura / DevOps, focando em serviços web, automação, monitoramento, autenticação corporativa e alta disponibilidade.
 

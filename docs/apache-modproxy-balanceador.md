@@ -1,6 +1,6 @@
 # Apache HTTPD como Balanceador com mod_proxy / mod_proxy_balancer
 
-Autor: Otávio Henrique Santana Azevedo  
+Autor: Otávio Azevedo  
 
 Este documento resume, em alto nível, a minha experiência configurando o **Apache HTTP Server**
 como balanceador de carga HTTP/HTTPS utilizando **mod_proxy** e **mod_proxy_balancer**.

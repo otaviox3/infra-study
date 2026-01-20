@@ -2,7 +2,7 @@
 
 Repositório de estudos e **resumos de experiência** em Infraestrutura / DevOps.
 
-Autor: **Otávio Henrique Santana Azevedo**  
+Autor: **Otávio Azevedo**  
 Local: Salvador – BA  
 
 Objetivo: organizar meus labs, registros e anotações sobre serviços web, monitoramento, autenticação corporativa, balanceadores de carga e ferramentas de CI/CD que utilizo no dia a dia (SonarQube, GitLab, XWiki, Observium, Jenkins, Apache, Nginx, etc.), com foco em evolução profissional e futuro trabalho remoto.
