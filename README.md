@@ -60,7 +60,6 @@ Objetivo: organizar meus labs, registros e anotações sobre serviços web, moni
 
 ## 🔄 Como uso este repositório
 
-- Estudo ~2h por dia (seg–sex);
 - Cada laboratório ou experiência relevante gera pelo menos **1 commit**;
 - Sempre que configuro algo importante em produção (SonarQube, XWiki, Jenkins, balanceadores, PHP+Oracle, etc.), crio um **resumo** aqui em vez de expor o tutorial completo.
 
