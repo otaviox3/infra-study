@@ -9,7 +9,7 @@ componentes chatos de preparar na mão (PHP + Oracle, etc.).
 
 ## PHP 7.4 + OCI8 + PDO_OCI – Ubuntu 22.04
 
-**Arquivo sugerido:** `install-php74-oci8-pdo_oci-ubuntu22.sh`  
+**Arquivo sugerido:** `install-php74-oci8-pdo_oci.sh`  
 
 Script que automatiza a instalação do **PHP 7.4** no **Ubuntu 22.04** com as extensões:
 
