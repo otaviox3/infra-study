@@ -8,13 +8,13 @@ Objetivo: Registrar e fazer anotações sobre serviços web, monitoramento,
 autenticação corporativa, balanceadores de carga e ferramentas de CI/CD que utilizo no
 dia a dia (SonarQube, GitLab, XWiki, Observium, Jenkins, Apache, Nginx, etc.), na operação
 de **mais de 100 servidores Linux e Windows** em ambiente de produção, com foco em evolução
-profissional e futuro trabalho remoto.
+profissional.
 
 ---
 
 ## 📚 Navegação rápida
 
-- 📄 **Portfólio (resumo do que eu sei fazer)**  
+- 📄 **Portfólio**  
   → [portfolio.md](./portfolio.md)
 
 - 🧾 **Resumos de configurações reais que já implementei**
