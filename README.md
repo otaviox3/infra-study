@@ -46,14 +46,12 @@ com foco em evolução profissional.
   - Scripts de instalação PHP 7.4 + OCI8 + PDO_OCI (Ubuntu 22.04 / 24.04+)  
     → [scripts/README.md](./scripts/README.md)
 
-  - (planejado) XWiki + LDAP focado em autenticação e grupos  
-    → `docs/xwiki-ldap.md`
-
   - (planejado) Observium  
     → `docs/observium.md`
+  
+  - Instalação do Jenkins com PHP 8.3, Node.js 20 e autenticação LDAP corporativa  
+    → [docs/jenkins-php83-ldap-cobaia.md](./docs/jenkins-php83-ldap-cobaia.md)
 
-  - (planejado) Jenkins + LDAP  
-    → `docs/jenkins-ldap.md`
 
 ---
 

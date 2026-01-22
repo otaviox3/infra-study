@@ -12,10 +12,10 @@ em ambiente Linux/Windows.
 
 Experiência na instalação, configuração e integração do **SonarQube** com **GitLab**:
 
-- Ajuste de **Server base URL**, configuração de rede (`DNS` / `/etc/hosts`) e certificados.
-- Criação de **Application OAuth** no GitLab e configuração do SonarQube para autenticação
+- Ajuste de Server base URL, configuração de rede (DNS / `/etc/hosts`) e certificados.
+- Criação de Application OAuth no GitLab e configuração do SonarQube para autenticação
   via GitLab (SSO / OAuth2).
-- Uso de **Personal Access Tokens** e configuração de *DevOps Platform Integrations → GitLab*
+- Uso de Personal Access Tokens e configuração de *DevOps Platform Integrations → GitLab*
   no SonarQube.
 - Documentação interna completa do processo em guia próprio sobre integração SonarQube + GitLab.
 
@@ -31,7 +31,7 @@ Instalação e configuração do **XWiki** em Debian/Ubuntu usando:
 
 Principais atividades:
 
-- Conclusão do wizard inicial, instalação de *flavor* padrão e preparação da wiki para uso corporativo.
+- Conclusão do wizard inicial, instalação de flavor padrão e preparação da wiki para uso corporativo.
 - Integração com **LDAP/Active Directory**:
   - configuração de autenticador LDAP;
   - mapeamento de atributos (login, nome, sobrenome, e-mail, grupos);
@@ -57,10 +57,29 @@ Principais atividades:
 
 ## Jenkins (com e sem autenticação LDAP)
 
-- Instalação e configuração do **Jenkins** em servidores Linux.  
-- Configuração de **pipelines freestyle** e pipelines declarativos simples.  
-- Integração com **LDAP** para autenticação centralizada quando necessário.  
-- Integração com **Git/GitLab** para disparo de jobs em *push* / *merge*.
+- Instalação e configuração do **Jenkins** em servidores Linux (Oracle Linux / RHEL-like).
+- Preparação do ambiente de build:
+  - **PHP 8.3** via repositório Remi/EPEL;
+  - **Node.js 20** e instalação global da **Vue CLI**;
+  - **Java 17** para execução do Jenkins.
+- Configuração inicial do Jenkins (plugins recomendados, usuário admin, serviço via systemd).
+- Integração com **LDAP corporativo**:
+  - uso de *Security Realm: LDAP*;
+  - configuração de `server`, `root DN`, filtros de usuário e grupo;
+  - conta de bind (Manager DN) dedicada;
+  - validação via *Test LDAP settings*.
+- Uso de **Project-based Matrix Authorization Strategy**:
+  - permissões por usuário/grupo por projeto;
+  - herança de permissões e segurança baseada em projeto.
+- Criação de jobs para aplicações PHP/Laravel + Node:
+  - parametrização com variável `BRANCH`;
+  - integração com Git interno (`http(s)://git.cobaia.exemplo.com/...`);
+  - passos de build típicos:
+    - `composer install`
+    - `npm install`
+    - `php artisan migrate`
+    - `php artisan optimize`
+    - `npm run build`.
 
 ---
 
@@ -97,10 +116,10 @@ Configuração do **Apache** como balanceador de carga em dois cenários princip
 
 1. **HTTP/HTTPS usando `mod_proxy` / `mod_proxy_balancer`**  
    - múltiplos backends (APIs, aplicações web, etc.);  
-   - definição de pools de backends, *stickiness*, health checks e logs dedicados.
+   - definição de pools de backends, stickiness, health checks e logs dedicados.
 
 2. **Aplicações Java (Tomcat / JBoss) usando `mod_jk` e protocolo AJP 1.3**  
-   - configuração de *workers* e *sticky session*;  
+   - configuração de workers e sticky session;  
    - uso do **JK Status Manager** para monitorar e ajustar nós.
 
 Documentação interna sobre:
@@ -122,7 +141,7 @@ Documentação interna sobre:
   - servidores Apache e Nginx (HTTPS, reverse proxy, balanceadores);
   - aplicações Java (Tomcat/XWiki/JBoss) expostas via proxy;
   - outros serviços internos que exigem certificados válidos.
-- Automação parcial do processo via script **`convert-cert-to-pem.sh`**, padronizando a preparação
+- Automação parcial do processo via script `convert-cert-to-pem.sh`, padronizando a preparação
   de certificados em múltiplos servidores.
 
 ---
@@ -133,7 +152,7 @@ Documentação interna sobre:
 - Deploy de aplicações Java (`.war`), ajuste de contextos e memória.  
 - Integração Tomcat + Nginx/Apache (incluindo cenários com `mod_jk` e `mod_proxy_balancer`).  
 - Configuração de **HTTPS direto no Tomcat 9** para APIs internas na porta 8443:
-  - uso de certificado wildcard corporativo;
+  - uso de certificado wildcard `*.cobaia.exemplo.com`;
   - configuração de `server.xml` com `certificateFile` (`fullchain.pem`)
     e `certificateKeyFile` (chave privada);
   - ajuste de permissões de arquivos de certificado para o usuário do serviço.
@@ -143,9 +162,9 @@ Documentação interna sobre:
 
 ## JBoss / WildFly
 
-- Instalação e configuração de instâncias **JBoss / WildFly** em Linux.
-- Deploy de aplicações Java EE.
-- Integração com Apache (`mod_jk` / HTTP) para exposição externa.
+- Instalação e configuração de instâncias **JBoss / WildFly** em Linux.  
+- Deploy de aplicações Java EE.  
+- Integração com Apache (`mod_jk` / HTTP) para exposição externa.  
 - Gestão de logs, datasources e parâmetros de JVM.
 - Configuração de **HTTPS na porta 8443** usando:
   - conversão de `fullchain.pem` + `privkey.pem` em `certificado.p12` (PKCS12) e depois `certificado.jks` (JKS);
