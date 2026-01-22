@@ -50,7 +50,7 @@ com foco em evolução profissional.
     → `docs/observium.md`
   
   - Instalação do Jenkins com PHP 8.3, Node.js 20 e autenticação LDAP corporativa  
-    → [docs/jenkins-php83-ldap-cobaia.md](./docs/jenkins-php83-ldap-cobaia.md)
+    → [docs/jenkins-php83-ldap-atualizado.md](./docs/jenkins-php83-ldap-atualizado.md)
 
 
 ---
