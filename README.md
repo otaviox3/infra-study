@@ -1,14 +1,14 @@
 # infra-study
 
-Repositório de estudos e **resumos de experiência** em Infraestrutura / DevOps.
+Repositório de estudos e resumos de experiência em Infraestrutura / DevOps.
 
 Autor: **Otávio Azevedo**
 
-Objetivo: Registrar e fazer anotações sobre serviços web, monitoramento,
-autenticação corporativa, balanceadores de carga e ferramentas de CI/CD que utilizo no
-dia a dia (SonarQube, GitLab, XWiki, Observium, Jenkins, Apache, Nginx, etc.), na operação
-de **mais de 100 servidores Linux e Windows** em ambiente de produção, com foco em evolução
-profissional.
+Objetivo: registrar e fazer anotações sobre serviços web, monitoramento,
+autenticação corporativa, balanceadores de carga e ferramentas de CI/CD que utilizo
+no dia a dia (SonarQube, GitLab, XWiki, Observium, Jenkins, Apache, Nginx, etc.),
+na operação de **mais de 100 servidores Linux e Windows** em ambiente de produção,
+com foco em evolução profissional.
 
 ---
 
@@ -19,73 +19,86 @@ profissional.
 
 - 🧾 **Resumos de configurações reais que já implementei**
 
-  - **Experiência em ambientes reais de produção (100+ servidores Linux e Windows)**  
+  - Experiência em ambientes reais de produção (100+ servidores Linux e Windows)  
     → [docs/production-experience.md](./docs/production-experience.md)
 
-  - **SonarQube + GitLab (autenticação / DevOps Integration)**  
+  - Conversão de certificados .crt/.key em fullchain.pem + privkey.pem (para HTTPS em Apache/Nginx/etc.)  
+    → [docs/certificados-crt-key-para-pem.md](./docs/certificados-crt-key-para-pem.md)
+
+  - SonarQube + GitLab (autenticação / DevOps Integration)  
     → [docs/sonarqube-gitlab-auth.md](./docs/sonarqube-gitlab-auth.md)
 
-  - **XWiki com Tomcat 9 + MariaDB + Apache2 (proxy reverso + LDAP)**  
+  - XWiki com Tomcat 9 + MariaDB + Apache2 (proxy reverso + LDAP)  
     → [docs/xwiki-tomcat9-mariadb-apache2.md](./docs/xwiki-tomcat9-mariadb-apache2.md)
 
-  - **Apache HTTPD como balanceador para aplicações Java com mod_jk**  
+  - Apache HTTPD como balanceador para aplicações Java com mod_jk  
     → [docs/apache-modjk-balanceador.md](./docs/apache-modjk-balanceador.md)
 
-  - **Apache HTTPD como balanceador HTTP/HTTPS com mod_proxy / mod_proxy_balancer**  
+  - Apache HTTPD como balanceador HTTP/HTTPS com mod_proxy / mod_proxy_balancer  
     → [docs/apache-modproxy-balanceador.md](./docs/apache-modproxy-balanceador.md)
 
-  - **Scripts de instalação PHP 7.4 + OCI8 + PDO_OCI (Ubuntu 22.04 / 24.04+)**  
+  - Scripts de instalação PHP 7.4 + OCI8 + PDO_OCI (Ubuntu 22.04 / 24.04+)  
     → [scripts/README.md](./scripts/README.md)
 
-  - **(planejado) XWiki + LDAP focado em autenticação e grupos**  
+  - (planejado) XWiki + LDAP focado em autenticação e grupos  
     → `docs/xwiki-ldap.md`
 
-  - **(planejado) Observium**  
+  - (planejado) Observium  
     → `docs/observium.md`
 
-  - **(planejado) Jenkins + LDAP**  
+  - (planejado) Jenkins + LDAP  
     → `docs/jenkins-ldap.md`
 
 ---
 
 ## 🛠️ Tecnologias presentes neste repositório
 
-- **Servidores web**
-  - Nginx  
-  - Apache HTTPD  
+### Servidores web
 
-- **Aplicações Java**
-  - Tomcat  
-  - JBoss / WildFly  
+- Nginx  
+- Apache HTTPD  
 
-- **Wiki corporativa**
-  - XWiki (Tomcat + MariaDB + Apache2, com LDAP)  
+### Aplicações Java
 
-- **Qualidade de código**
-  - SonarQube integrado ao GitLab  
+- Tomcat  
+- JBoss / WildFly  
 
-- **SCM / CI/CD**
-  - GitLab  
-  - Jenkins  
+### Wiki corporativa
 
-- **Monitoramento**
-  - Observium  
-  - Zabbix  
+- XWiki (Tomcat + MariaDB + Apache2, com LDAP)  
 
-- **Balanceadores de carga (Apache)**
-  - mod_proxy / mod_proxy_balancer (HTTP/HTTPS)  
-  - mod_jk (AJP 1.3) para Tomcat/JBoss  
+### Qualidade de código
 
-- **Banco de dados**
-  - MariaDB  
-  - PostgreSQL
+- SonarQube integrado ao GitLab  
 
-- **Ambientes legados**
-  - Integração com Oracle via PHP 7.4 + OCI8/PDO_OCI (scripts de automação)  
+### SCM / CI/CD
 
-- **Sistemas operacionais**
-  - Linux (Ubuntu/Debian e CentOS/RHEL)  
-  - Windows Server  
+- GitLab  
+- Jenkins  
+
+### Monitoramento
+
+- Observium  
+- Zabbix  
+
+### Balanceadores de carga (Apache)
+
+- mod_proxy / mod_proxy_balancer (HTTP/HTTPS)  
+- mod_jk (AJP 1.3) para Tomcat/JBoss  
+
+### Banco de dados
+
+- MariaDB  
+- PostgreSQL  
+
+### Ambientes legados
+
+- Integração com Oracle via PHP 7.4 + OCI8/PDO_OCI (scripts de automação)  
+
+### Sistemas operacionais
+
+- Linux (Ubuntu/Debian e CentOS/RHEL)  
+- Windows Server  
 
 ---
 
