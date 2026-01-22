@@ -82,7 +82,7 @@ Depois:
 
 Primeiro acesso:
 
-- via navegador em http://<IP>:8080;
+- via navegador em http://localhost:8080;
 - obtenho a senha inicial em:
 
   - /var/lib/jenkins/secrets/initialAdminPassword
