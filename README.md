@@ -31,6 +31,9 @@ com foco em evolução profissional.
   - Configuração de certificado SSL no JBoss para aplicações monolíticas (porta 8443, keystore JKS)  
     → [docs/jboss-ssl-monolito-cobaia.md](./docs/jboss-ssl-monolito-cobaia.md)
 
+  - Instalação do Jenkins com PHP 8.3, Node.js 20 e autenticação LDAP corporativa  
+    → [docs/jenkins-php83-ldap-atualizado.md](./docs/jenkins-php83-ldap-atualizado.md)
+
   - SonarQube + GitLab (autenticação / DevOps Integration)  
     → [docs/sonarqube-gitlab-auth.md](./docs/sonarqube-gitlab-auth.md)
 
@@ -48,10 +51,6 @@ com foco em evolução profissional.
 
   - (planejado) Observium  
     → `docs/observium.md`
-  
-  - Instalação do Jenkins com PHP 8.3, Node.js 20 e autenticação LDAP corporativa  
-    → [docs/jenkins-php83-ldap-atualizado.md](./docs/jenkins-php83-ldap-atualizado.md)
-
 
 ---
 
