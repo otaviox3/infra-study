@@ -17,6 +17,10 @@ com foco em evolução profissional.
 - 📄 **Portfólio (resumo do que eu sei fazer)**  
   → [portfolio.md](./portfolio.md)
 
+- 🧾 **meu laboratório**
+  → [./labs]
+
+
 - 🧾 **Resumos de configurações reais que já implementei**
 
   - Experiência em ambientes reais de produção (100+ servidores Linux e Windows)  
