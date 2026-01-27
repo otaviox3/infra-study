@@ -1,117 +1,171 @@
-# infra-study
-
-Repositório de estudos e resumos de experiência em Infraestrutura / DevOps.
+# Repositório de estudos e experiência em Infraestrutura / DevOps
 
 Autor: **Otávio Azevedo**
 
-Objetivo: registrar e fazer anotações sobre serviços web, monitoramento,
-autenticação corporativa, balanceadores de carga e ferramentas de CI/CD que utilizo
-no dia a dia (SonarQube, GitLab, XWiki, Observium, Jenkins, Apache, Nginx, etc.),
-na operação de **mais de 100 servidores Linux e Windows** em ambiente de produção,
-com foco em evolução profissional.
+Objetivo: registrar e organizar meus estudos, laboratórios e resumos técnicos sobre serviços web, monitoramento, autenticação corporativa, balanceadores de carga, CI/CD e automação que utilizo no dia a dia na operação de mais de 100 servidores Linux e Windows em ambiente de produção, com foco em evolução profissional e futuro trabalho remoto.
 
 ---
 
 ## 📚 Navegação rápida
 
-- 📄 **Portfólio (resumo do que eu sei fazer)**  
-  → [portfolio.md](./portfolio.md)
+### 📄 Portfólio (resumo do que eu sei fazer)
+- `portfolio.md`
 
-- 🧾 **meu laboratório**
-  → [./labs]
+### 🧾 Experiência em ambientes reais de produção
+- `docs/production-experience.md`
 
+---
 
-- 🧾 **Resumos de configurações reais que já implementei**
+## 🧾 Resumos de configurações reais que já implementei
 
-  - Experiência em ambientes reais de produção (100+ servidores Linux e Windows)  
-    → [docs/production-experience.md](./docs/production-experience.md)
+### Qualidade de código / DevOps
 
-  - Conversão de certificados `.crt`/`.key` em `fullchain.pem` e `privkey.pem` (uso em Apache/Nginx/etc.)  
-    → [docs/certificados-crt-key-para-pem.md](./docs/certificados-crt-key-para-pem.md)
+- **SonarQube + GitLab (autenticação / DevOps Integration)**  
+  Integração do SonarQube com GitLab (OAuth, tokens, DevOps Platform Integrations).  
+  → `docs/sonarqube-gitlab-auth.md`
 
-  - Configuração de certificado SSL no Tomcat 9 para APIs internas (porta 8443, certificado wildcard)  
-    → [docs/tomcat9-ssl-api-cobaia.md](./docs/tomcat9-ssl-api-cobaia.md)
+---
 
-  - Configuração de certificado SSL no JBoss para aplicações monolíticas (porta 8443, keystore JKS)  
-    → [docs/jboss-ssl-monolito-cobaia.md](./docs/jboss-ssl-monolito-cobaia.md)
+### Wiki corporativa / Aplicações Java
 
-  - Instalação do Jenkins com PHP 8.3, Node.js 20 e autenticação LDAP corporativa  
-    → [docs/jenkins-php83-ldap-atualizado.md](./docs/jenkins-php83-ldap-atualizado.md)
+- **XWiki com Tomcat 9 + MariaDB + Apache2 (proxy reverso + HTTPS)**  
+  Instalação e publicação do XWiki atrás de Apache2 em ambiente corporativo.  
+  → `docs/xwiki-tomcat9-mariadb-apache2.md`
 
-  - XWiki – instalação básica com Tomcat 9 + MariaDB + Apache2  
-    → [docs/xwiki-tomcat9-mariadb-apache2.md](./docs/xwiki-tomcat9-mariadb-apache2.md)
+- **XWiki em Debian 12 + Tomcat 9 + MariaDB + Apache2 + LDAP**  
+  Instalação completa com autenticação LDAP, proxy reverso e ajustes de URL.  
+  → `docs/xwiki-debian12-tomcat9-mariadb-apache2-ldap.md`
 
-  - XWiki em Debian 12 com Tomcat 9 + MariaDB + Apache2 + autenticação LDAP e HTTPS via Apache  
-    → [docs/xwiki-debian12-tomcat9-mariadb-apache2-ldap.md](./docs/xwiki-debian12-tomcat9-mariadb-apache2-ldap.md)
+---
 
-  - SonarQube + GitLab (autenticação / DevOps Integration)  
-    → [docs/sonarqube-gitlab-auth.md](./docs/sonarqube-gitlab-auth.md)
+### Balanceadores de carga (Apache)
 
-  - Apache HTTPD como balanceador para aplicações Java com `mod_jk`  
-    → [docs/apache-modjk-balanceador.md](./docs/apache-modjk-balanceador.md)
+- **Apache HTTPD como balanceador para aplicações Java com mod_jk**  
+  Uso de AJP 1.3, sticky sessions, JK Status Manager e boas práticas.  
+  → `docs/apache-modjk-balanceador.md`
 
-  - Apache HTTPD como balanceador HTTP/HTTPS com `mod_proxy` / `mod_proxy_balancer`  
-    → [docs/apache-modproxy-balanceador.md](./docs/apache-modproxy-balanceador.md)
+- **Apache HTTPD como balanceador HTTP/HTTPS com mod_proxy / mod_proxy_balancer**  
+  Reverse proxy, pools de backends, hardening e proteção de interfaces de administração.  
+  → `docs/apache-modproxy-balanceador.md`
 
-  - Observium – monitoramento de rede e servidores via SNMP  
-    → [docs/observium.md](./docs/observium.md)
+---
 
-  - Scripts de instalação PHP 7.4 + OCI8 + PDO_OCI (Ubuntu 22.04 / 24.04+)  
-    → [scripts/README.md](./scripts/README.md)
+### Certificados e HTTPS
+
+- **Conversão de certificados .crt e .key em fullchain.pem e privkey.pem**  
+  Resumo do processo que uso em produção para preparar certificados para Nginx, Apache, Tomcat e outros serviços.  
+  → `docs/certificados-crt-key-para-pem.md`
+
+- **Tomcat 9 + SSL para API (exemplo de aplicação corporativa)**  
+  Configuração de certificado SSL no Tomcat 9 para expor uma API segura atrás de proxy.  
+  → `docs/tomcat9-ssl-api-atualizado.md`
+
+- **JBoss monolito + SSL (certificado em aplicação legada)**  
+  Procedimento para habilitar HTTPS em JBoss monolítico usando key/truststores.  
+  → `docs/jboss-ssl-monolito-atualizado.md`
+
+---
+
+### CI/CD e autenticação corporativa
+
+- **Jenkins com PHP 8.3 + LDAP**  
+  Instalação e configuração de Jenkins com PHP 8.3, integrações e autenticação LDAP.  
+  → `docs/jenkins-php83-ldap-atualizado.md`
+
+---
+
+### Monitoramento
+
+- **Observium (monitoramento de rede e servidores)**  
+  Instalação, descoberta de hosts, configuração de alertas e uso em ambiente real.  
+  → `docs/observium.md`
+
+- (planejado) **Zabbix – templates, triggers e monitoração de serviços web**  
+  → `docs/zabbix.md` *(a criar)*
+
+---
+
+### Autenticação corporativa / LDAP
+
+- (planejado) **XWiki + LDAP focado em autenticação e grupos**  
+  → `docs/xwiki-ldap.md`
+
+- (planejado) **Jenkins + LDAP (variações e cenários)**  
+  → `docs/jenkins-ldap.md`
+
+---
+
+## 🧪 Labs / estudos práticos
+
+Laboratórios pensados para praticar conceitos modernos (Docker, Kubernetes, etc.) sem perder o foco em infra/DevOps.
+
+- **App web simples em Docker + Kubernetes (kind)**  
+  App Flask mínima empacotada em Docker, com imagem própria, rodando em cluster Kubernetes local com kind, usando Deployment, Service (NodePort) e probes de `/health`.  
+  → `labs/hello-webapp-docker-k8s/README.md`
+
+*(novos labs serão adicionados aqui à medida que eu for praticando mais coisas, como bancos em Kubernetes, Ingress, logging centralizado, etc.)*
+
+---
+
+## 🧩 Scripts de automação
+
+Scripts que uso para instalar e configurar componentes chatos de preparar na mão.
+
+- **Scripts de instalação PHP 7.4 + OCI8 + PDO_OCI (Ubuntu 22.04 / 24.04+)**  
+  Automação de ambiente legado PHP 7.4 com Oracle, incluindo Oracle Instant Client e compilação das extensões.  
+  → `scripts/README.md`
 
 ---
 
 ## 🛠️ Tecnologias presentes neste repositório
 
-### Servidores web
+**Servidores web**
 
 - Nginx  
 - Apache HTTPD  
 
-### Aplicações Java
+**Aplicações Java**
 
 - Tomcat  
 - JBoss / WildFly  
 
-### Wiki corporativa
+**Wiki corporativa**
 
-- XWiki (Tomcat + MariaDB + Apache2, com LDAP)  
+- XWiki (Tomcat + MariaDB + Apache2, com e sem LDAP)  
 
-### Qualidade de código
+**Qualidade de código**
 
 - SonarQube integrado ao GitLab  
 
-### SCM / CI/CD
+**SCM / CI/CD**
 
 - GitLab  
 - Jenkins  
 
-### Monitoramento
+**Monitoramento**
 
 - Observium  
 - Zabbix  
 
-### Balanceadores de carga (Apache)
+**Balanceadores de carga (Apache)**
 
 - `mod_proxy` / `mod_proxy_balancer` (HTTP/HTTPS)  
 - `mod_jk` (AJP 1.3) para Tomcat/JBoss  
 
-### Banco de dados
+**Banco de dados**
 
 - MariaDB  
 - PostgreSQL  
 
-### Ambientes legados
+**Ambientes legados**
 
 - Integração com Oracle via PHP 7.4 + OCI8/PDO_OCI (scripts de automação)  
 
-### Sistemas operacionais
+**Sistemas operacionais**
 
 - Linux (Ubuntu/Debian e CentOS/RHEL)  
 - Windows Server  
 
 ---
 
-Este repositório **infra-study** registra meus estudos, laboratórios e resumos técnicos
-de coisas que eu realmente uso em produção, servindo como meu “caderno de campo”
-de Infra/DevOps.
+Este repositório **infra-study** registra meus estudos, laboratórios e resumos técnicos de coisas que eu realmente uso em produção, servindo como meu “caderno de campo” de Infra/DevOps.
