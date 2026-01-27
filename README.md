@@ -34,11 +34,14 @@ com foco em evolução profissional.
   - Instalação do Jenkins com PHP 8.3, Node.js 20 e autenticação LDAP corporativa  
     → [docs/jenkins-php83-ldap-atualizado.md](./docs/jenkins-php83-ldap-atualizado.md)
 
+  - XWiki – instalação básica com Tomcat 9 + MariaDB + Apache2  
+    → [docs/xwiki-tomcat9-mariadb-apache2.md](./docs/xwiki-tomcat9-mariadb-apache2.md)
+
+  - XWiki em Debian 12 com Tomcat 9 + MariaDB + Apache2 + autenticação LDAP e HTTPS via Apache  
+    → [docs/xwiki-debian12-tomcat9-mariadb-apache2-ldap.md](./docs/xwiki-debian12-tomcat9-mariadb-apache2-ldap.md)
+
   - SonarQube + GitLab (autenticação / DevOps Integration)  
     → [docs/sonarqube-gitlab-auth.md](./docs/sonarqube-gitlab-auth.md)
-
-  - XWiki com Tomcat 9 + MariaDB + Apache2 (proxy reverso + LDAP)  
-    → [docs/xwiki-tomcat9-mariadb-apache2.md](./docs/xwiki-tomcat9-mariadb-apache2.md)
 
   - Apache HTTPD como balanceador para aplicações Java com `mod_jk`  
     → [docs/apache-modjk-balanceador.md](./docs/apache-modjk-balanceador.md)
@@ -46,11 +49,11 @@ com foco em evolução profissional.
   - Apache HTTPD como balanceador HTTP/HTTPS com `mod_proxy` / `mod_proxy_balancer`  
     → [docs/apache-modproxy-balanceador.md](./docs/apache-modproxy-balanceador.md)
 
+  - Observium – monitoramento de rede e servidores via SNMP  
+    → [docs/observium.md](./docs/observium.md)
+
   - Scripts de instalação PHP 7.4 + OCI8 + PDO_OCI (Ubuntu 22.04 / 24.04+)  
     → [scripts/README.md](./scripts/README.md)
-
-  - (planejado) Observium  
-    → `docs/observium.md`
 
 ---
 

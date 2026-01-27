@@ -43,15 +43,28 @@ Principais atividades:
   - HTTPS obrigatório;
   - proxy reverso para o Tomcat;
   - logs dedicados para o domínio da wiki.
+- Experiência específica em **Debian 12** usando pacotes `xwiki-tomcat9-mariadb` e
+  publicação por `https://xwiki.cobaia.exemplo.com`.
 
 ---
 
 ## Observium
 
-- Implantação do **Observium** para monitoramento de rede e servidores.  
-- Descoberta automática de hosts, configuração de **SNMP** e organização por grupos.  
-- Acompanhamento de gráficos de utilização (CPU, memória, banda, disco).  
-- Criação de **alertas básicos (thresholds)** para recursos críticos.
+- Implantação do **Observium** para monitoramento de rede e servidores Linux/Windows.  
+- Configuração de **SNMP** em switches, roteadores, firewalls e servidores, com comunidades
+  separadas por ambiente (produção, teste, etc.) e acesso restrito por firewall.  
+- Criação e organização de hosts por:
+  - grupos lógicos (Core, Distribuição, Acesso, Servidores Linux, Servidores Windows);
+  - localizações (datacenter, sites/filiais).  
+- Acompanhamento de gráficos de utilização:
+  - tráfego em interfaces (in/out, erros, discards, saturação de links);
+  - CPU, memória e uso de disco em servidores.  
+- Configuração de **alertas básicos**:
+  - alta utilização de interface por tempo prolongado;
+  - queda de host (ping/SNMP);
+  - uso de disco acima de thresholds definidos.  
+- Uso do Observium como visão de saúde da infraestrutura de rede, complementando outras
+  ferramentas como Zabbix e soluções de logs (ELK/Graylog).
 
 ---
 
