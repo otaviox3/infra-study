@@ -71,13 +71,6 @@ Objetivo: registrar e organizar meus estudos, laboratórios e resumos técnicos 
 
 ---
 
-### Autenticação corporativa / LDAP
-
-*(planejado)* XWiki + LDAP focado em autenticação e grupos (`docs/xwiki-ldap.md`).  
-*(planejado)* Jenkins + LDAP (variações e cenários) (`docs/jenkins-ldap.md`).
-
----
-
 ## 🧪 Labs / estudos práticos
 
 Laboratórios pensados para praticar conceitos modernos (Docker, Kubernetes, etc.) sem perder o foco em infra/DevOps.
