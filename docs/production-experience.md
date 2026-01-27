@@ -1,125 +1,184 @@
-# Experiência em Produção
+# Experiência em ambientes reais de produção (100+ servidores)
 
-Autor: Otávio Azevedo  
+Autor: **Otávio Azevedo**
 
-Este documento resume algumas das plataformas que mantenho em ambiente **real de produção**
-no meu trabalho atual (órgão público), sem expor dados sensíveis.
-
----
-
-## Visão geral da operação
-
-- Responsável por ambientes rodando em **mais de 100 servidores** no total, entre:
-  - **Linux** (principalmente para serviços web e ferramentas de desenvolvimento);
-  - **Windows Server** (aplicações legadas e serviços de apoio).
-- Atuação focada em:
-  - serviços web (Apache, Nginx, Tomcat, JBoss, XWiki);
-  - ferramentas de desenvolvimento e qualidade (GitLab, Jenkins, SonarQube);
-  - monitoramento (Observium, Zabbix);
-  - suporte a ambientes legados (PHP 7.4 + Oracle).
+Este documento resume, de forma mais técnica e direta, o tipo de ambiente de produção que eu já opero hoje e as responsabilidades que assumi na prática.
 
 ---
 
-## XWiki – Wiki Corporativa
+## Visão geral do ambiente
 
-**Stack:** Debian, Tomcat 9, XWiki, MariaDB, Apache2 (HTTPS), LDAP/AD  
-
-**O que eu faço:**
-
-- Instalação e atualização do XWiki em servidores Linux.
-- Configuração de banco MariaDB dedicado e tuning básico.
-- Apache2 como proxy reverso HTTPS na frente do Tomcat.
-- Integração com **LDAP/AD** para login único de usuários.
-- Backup e acompanhamento de estabilidade do serviço.
-
-**Resultados:**
-
-- Plataforma de documentação interna acessada diariamente por times técnicos e não técnicos.
-- Redução de documentação solta em arquivos e e-mails, centralizando tudo no XWiki.
+- **Escala**: mais de **100 servidores** Linux e Windows.
+- **Função principal**: sustentação e configuração de serviços web e de infraestrutura para uso interno corporativo.
+- **Sistemas operacionais**:
+  - Linux (Ubuntu/Debian e CentOS/RHEL);
+  - Windows Server (para serviços específicos).
+- **Perfil das aplicações**:
+  - aplicações web Java (Tomcat, JBoss/WildFly);
+  - aplicações PHP (incluindo cenários com Oracle);
+  - ferramentas de colaboração, monitoramento, qualidade de código e CI/CD.
 
 ---
 
-## SonarQube + GitLab
+## Responsabilidades principais
 
-**Stack:** SonarQube, GitLab (self-hosted), Linux  
+No dia a dia, atuo em:
 
-**O que eu faço:**
+- Instalação, configuração e manutenção de **serviços web** (Apache, Nginx, Tomcat, JBoss).
+- Suporte a equipes de desenvolvimento:
+  - subir novas aplicações em servidores;
+  - ajustar parâmetros de ambiente (porta, memória, variáveis, conexões com banco etc.);
+  - orientação em boas práticas básicas de deploy.
+- Configuração e renovação de **certificados TLS/SSL**:
+  - preparo de `fullchain.pem` e `privkey.pem`;
+  - uso em Nginx, Apache, Tomcat/JBoss e balanceadores.
+- Operação de ferramentas de **CI/CD, qualidade de código e SCM**:
+  - GitLab, Jenkins, SonarQube.
+- **Monitoramento** de infraestrutura:
+  - Zabbix e Observium;
+  - criação de hosts, templates, triggers e alertas.
+- Automação com **shell script** para:
+  - instalação de pacotes complexos (PHP 7.4 + Oracle);
+  - padronização de ambientes Linux.
+
+---
+
+## Serviços e ferramentas que já mantenho em produção
+
+### 1. Serviços web e aplicação
+
+**Nginx**
+
+- Reverse proxy para aplicações internas.
+- Virtual hosts com HTTPS.
+- Ajuste de headers, redirects e hardening básico.
+
+**Apache HTTPD**
+
+- VHosts HTTP/HTTPS.
+- Reverse proxy para:
+  - Tomcat;
+  - JBoss;
+  - aplicações PHP.
+- Ativação e configuração de módulos (`rewrite`, `ssl`, `proxy`, `proxy_balancer`, `jk`, etc.).
+
+**Tomcat**
+
+- Deploy de aplicações Java (WAR).
+- Ajustes de contextos, memória da JVM e parâmetros de conector (HTTP/AJP).
+- Integração com Apache (mod_proxy, mod_jk).
+
+**JBoss / WildFly**
+
+- Instalação e manutenção de instâncias JBoss monolíticas.
+- Deploy de aplicações Java EE.
+- Configuração de HTTPS usando key/truststores.
+- Integração com Apache.
+
+---
+
+### 2. Wiki corporativa e colaboração
+
+**XWiki**
+
+- Instalação com Tomcat + MariaDB.
+- Publicação atrás de Apache2 com HTTPS (proxy reverso).
+- Ajuste de URLs (XWiki respondendo na raiz do domínio).
+- Integração com **LDAP/Active Directory**:
+  - autenticação de usuários;
+  - criação automática a partir do diretório;
+  - mapeamento de grupos.
+
+---
+
+### 3. Qualidade de código e DevOps
+
+**SonarQube + GitLab**
 
 - Instalação e configuração do SonarQube.
-- Integração de autenticação com GitLab (OAuth2 / SSO).
-- Configuração de **DevOps Platform Integrations** para o SonarQube falar com a API do GitLab.
-- Apoio na configuração de projetos para rodar análise de código a partir do GitLab CI.
-
-**Resultados:**
-
-- Visibilidade de qualidade de código para os times de desenvolvimento.
-- Automação de parte das validações de qualidade nos pipelines.
+- Integração com GitLab via:
+  - Application OAuth;
+  - DevOps Platform Integrations;
+  - tokens de autenticação.
+- Ajuste de URLs, DNS, certificados e permissões de acesso.
+- Suporte para que o time de desenvolvimento utilize análise estática no fluxo de CI/CD.
 
 ---
 
-## Balanceadores Apache
+### 4. CI/CD e versionamento
 
-**Stack:** Apache HTTPD, mod_proxy / mod_proxy_balancer, mod_jk, Tomcat/JBoss  
+**GitLab (self-hosted)**
 
-**O que eu faço:**
+- Instalação e administração de instância GitLab on-premise.
+- Criação de grupos, projetos e controle de permissões.
+- Configuração de runners (Shell/Docker) em cenários de CI/CD.
 
-- Configuração de Apache como **balanceador de carga**:
-  - HTTP/HTTPS com *mod_proxy_balancer* para múltiplos backends;
-  - AJP com *mod_jk* para aplicações Java (Tomcat/JBoss).
-- Definição de sticky session, pools de servidores e health checks básicos.
-- Hardening (headers de segurança, TLS) e proteção de `/balancer-manager` / `/jkstatus`.
+**Jenkins**
 
-**Resultados:**
-
-- Distribuição de carga entre várias instâncias de aplicação.
-- Possibilidade de retirar servidores para manutenção sem derrubar o serviço.
-
----
-
-## Jenkins, GitLab e Integrações
-
-**Stack:** Jenkins, GitLab, Apache/Nginx, Linux  
-
-**O que eu faço:**
-
-- Instalação do Jenkins e configuração de pipelines simples.
-- Integração com repositórios GitLab.
-- Quando necessário, integração com LDAP para controle de acesso.
-- Suporte a times de desenvolvimento na criação de jobs.
+- Instalação e gerenciamento de Jenkins em servidores Linux.
+- Criação e manutenção de jobs:
+  - freestyle;
+  - pipelines simples.
+- Integração com GitLab para disparar builds em push/merge.
+- Cenários com autenticação via LDAP quando necessário.
 
 ---
 
-## PHP 7.4 + Oracle (Ambientes Legados)
+### 5. Monitoramento
 
-**Stack:** Ubuntu, PHP 7.4, Apache2, Oracle Instant Client (OCI8/PDO_OCI)  
+**Zabbix**
 
-**O que eu faço:**
+- Instalação e configuração do Zabbix Server.
+- Cadastro de hosts (Linux, Windows, appliances).
+- Uso de templates prontos e criação de itens/triggers personalizados.
+- Configuração de ações e notificações para alerta em caso de falhas.
 
-- Criação de **scripts em bash** para automatizar:
-  - instalação de PHP 7.4 em versões novas do Ubuntu;
-  - instalação e configuração do Oracle Instant Client;
-  - compilação das extensões OCI8 e PDO_OCI.
-- Uso desses scripts para padronizar o setup em múltiplos servidores.
+**Observium**
 
-**Resultados:**
-
-- Redução de tempo e erro humano na montagem de ambientes legados.
-- Facilita recriar servidores em casos de migração ou problemas.
-
----
-
-## Monitoramento
-
-**Stack:** Observium, Zabbix  
-
-**O que eu faço:**
-
-- Configuração de Observium para monitorar switches, servidores e links.
-- Uso de Zabbix para monitoramento de serviços (HTTP, banco, etc.).
-- Criação de triggers e alertas básicos.
+- Implantação do Observium para monitoramento de rede e servidores.
+- Configuração de SNMP em equipamentos e hosts.
+- Organização de dispositivos em grupos/categorias.
+- Acompanhamento de gráficos de utilização (CPU, memória, banda, disco).
+- Configuração de alertas básicos de disponibilidade e capacidade.
 
 ---
 
-> Este documento não descreve tudo em detalhes técnicos (isso está nos tutoriais internos),
-> mas deixa claro que não se trata apenas de laboratório: são serviços reais,
-> usados por usuários reais, em produção.
+### 6. Certificados, HTTPS e segurança básica
+
+- Conversão de certificados (`.crt`, `.key`, cadeia intermediária/raiz) para formatos:
+  - `fullchain.pem`;
+  - `privkey.pem`.
+- Aplicação desses certificados em:
+  - Nginx;
+  - Apache HTTPD;
+  - Tomcat/JBoss;
+  - balanceadores de carga.
+- Criação de scripts para automatizar a preparação de certificados.
+- Configuração básica de segurança em servidores web:
+  - redirecionamento HTTP → HTTPS;
+  - headers de segurança;
+  - proteção de áreas administrativas.
+
+---
+
+### 7. Ambientes legados (PHP + Oracle)
+
+- Scripts de automação para instalação de:
+  - PHP 7.4 em Ubuntu (22.04/24.04+);
+  - Oracle Instant Client (basic, sdk, sqlplus);
+  - extensões **OCI8** e **PDO_OCI** para PHP.
+- Foco em sistemas legados que ainda dependem de PHP 7.4 com Oracle.
+- Padronização da instalação para reduzir erros manuais e tempo de setup.
+
+---
+
+## Forma de trabalho
+
+Na prática, minha atuação combina:
+
+- **Sustentação** de serviços críticos já em produção;
+- **Implantação** de novas ferramentas (XWiki, Observium, SonarQube, Jenkins, GitLab etc.);
+- **Automação** de rotinas repetitivas com shell script;
+- **Colaboração** com times de desenvolvimento, ajudando a preparar o ambiente certo para as aplicações.
+
+Este documento complementa o `README.md` e o `portfolio.md`, detalhando melhor o tipo de ambiente real que eu já administro hoje.
