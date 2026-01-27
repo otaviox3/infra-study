@@ -1,226 +1,215 @@
 # Portfólio de Infra / DevOps
 
-**Autor:** Otávio Azevedo  
+Autor: **Otávio Azevedo**
 
-**Objetivo:** Atuar com Infraestrutura / DevOps, focando em serviços web, automação,
-monitoramento, autenticação corporativa, alta disponibilidade e boa observabilidade
-em ambiente Linux/Windows.
+Objetivo: atuar com Infraestrutura / DevOps, focando em serviços web, automação, monitoramento, autenticação corporativa, alta disponibilidade e, progressivamente, em ambientes com containers e Kubernetes.
+
+---
+
+## Visão geral da experiência
+
+- Atuação em ambiente corporativo com **100+ servidores** Linux e Windows em produção.
+- Responsável por:
+  - instalação, configuração e manutenção de serviços web (Apache, Nginx, Tomcat, JBoss, XWiki, Observium, SonarQube, GitLab, Jenkins etc.);
+  - suporte a times de desenvolvimento para subir aplicações, ajustar ambiente e cuidar de certificados/HTTPS;
+  - automação de tarefas repetitivas com shell script (principalmente em distribuições Ubuntu/Debian e CentOS/RHEL);
+  - testes de estresse, monitoramento e troubleshooting de problemas em produção.
 
 ---
 
 ## SonarQube + GitLab
 
-Experiência na instalação, configuração e integração do **SonarQube** com **GitLab**:
+Experiência na instalação, configuração e integração do SonarQube com GitLab:
 
-- Ajuste de Server base URL, configuração de rede (DNS / `/etc/hosts`) e certificados.
-- Criação de Application OAuth no GitLab e configuração do SonarQube para autenticação
-  via GitLab (SSO / OAuth2).
-- Uso de Personal Access Tokens e configuração de *DevOps Platform Integrations → GitLab*
-  no SonarQube.
-- Documentação interna completa do processo em guia próprio sobre integração SonarQube + GitLab.
+- Ajuste de **Server base URL**, configuração de rede (DNS, `/etc/hosts`) e certificados.
+- Criação de **Application OAuth** no GitLab e configuração do SonarQube para autenticação via GitLab (SSO / OAuth2).
+- Uso de **Personal Access Tokens** e configuração de **DevOps Platform Integrations → GitLab** no SonarQube.
+- Documentação interna do processo em guia próprio de integração SonarQube + GitLab.
 
 ---
 
 ## XWiki (Tomcat 9 + MariaDB + Apache2 + LDAP)
 
-Instalação e configuração do **XWiki** em Debian/Ubuntu usando:
+Instalação e configuração do XWiki em ambiente Linux:
 
-- **Tomcat 9** como container de aplicação;  
-- **MariaDB** como banco de dados;  
-- **Apache2** como proxy reverso com HTTPS (Let’s Encrypt ou certificado corporativo).  
+- Uso de **Tomcat 9** como container de aplicação.
+- **MariaDB** como banco de dados da wiki.
+- **Apache2** como proxy reverso com HTTPS na frente do Tomcat.
+- Validação de saúde inicial com o wizard do XWiki, flavor padrão e configurações base.
 
-Principais atividades:
+Integração com **LDAP/Active Directory**:
 
-- Conclusão do wizard inicial, instalação de flavor padrão e preparação da wiki para uso corporativo.
-- Integração com **LDAP/Active Directory**:
-  - configuração de autenticador LDAP;
-  - mapeamento de atributos (login, nome, sobrenome, e-mail, grupos);
-  - criação automática de usuários a partir do diretório.
+- Configuração de autenticador LDAP.
+- Mapeamento de atributos (login, nome, sobrenome, e-mail, grupos).
+- Criação automática de usuários a partir do diretório.
 - Ajustes de URLs e comportamento:
-  - XWiki respondendo na raiz (`/`, sem `/xwiki` na URL);
+  - XWiki respondendo em `/` (sem `/xwiki` exposto ao usuário final);
   - configuração de `xwiki.home`, `xwiki.url.protocol` e `xwiki.webapppath`.
-- Uso de Apache como camada de segurança:
-  - HTTPS obrigatório;
-  - proxy reverso para o Tomcat;
-  - logs dedicados para o domínio da wiki.
-- Experiência específica em **Debian 12** usando pacotes `xwiki-tomcat9-mariadb` e
-  publicação por `https://xwiki.cobaia.exemplo.com`.
+
+Uso de Apache como camada de segurança:
+
+- HTTPS obrigatório.
+- Proxy reverso para o Tomcat.
+- Logs dedicados para o domínio da wiki.
 
 ---
 
 ## Observium
 
-- Implantação do **Observium** para monitoramento de rede e servidores Linux/Windows.  
-- Configuração de **SNMP** em switches, roteadores, firewalls e servidores, com comunidades
-  separadas por ambiente (produção, teste, etc.) e acesso restrito por firewall.  
-- Criação e organização de hosts por:
-  - grupos lógicos (Core, Distribuição, Acesso, Servidores Linux, Servidores Windows);
-  - localizações (datacenter, sites/filiais).  
-- Acompanhamento de gráficos de utilização:
-  - tráfego em interfaces (in/out, erros, discards, saturação de links);
-  - CPU, memória e uso de disco em servidores.  
-- Configuração de **alertas básicos**:
-  - alta utilização de interface por tempo prolongado;
-  - queda de host (ping/SNMP);
-  - uso de disco acima de thresholds definidos.  
-- Uso do Observium como visão de saúde da infraestrutura de rede, complementando outras
-  ferramentas como Zabbix e soluções de logs (ELK/Graylog).
+- Implantação do **Observium** para monitoramento de rede e servidores.
+- Descoberta automática de hosts, configuração de **SNMP** e organização dos dispositivos em grupos.
+- Acompanhamento de gráficos de utilização (CPU, memória, banda, disco).
+- Criação de alertas básicos (thresholds) para recursos críticos.
+- Integração do Observium como fonte de visibilidade para ambiente de produção.
 
 ---
 
 ## Jenkins (com e sem autenticação LDAP)
 
-- Instalação e configuração do **Jenkins** em servidores Linux (Oracle Linux / RHEL-like).
-- Preparação do ambiente de build:
-  - **PHP 8.3** via repositório Remi/EPEL;
-  - **Node.js 20** e instalação global da **Vue CLI**;
-  - **Java 17** para execução do Jenkins.
-- Configuração inicial do Jenkins (plugins recomendados, usuário admin, serviço via systemd).
-- Integração com **LDAP corporativo**:
-  - uso de *Security Realm: LDAP*;
-  - configuração de `server`, `root DN`, filtros de usuário e grupo;
-  - conta de bind (Manager DN) dedicada;
-  - validação via *Test LDAP settings*.
-- Uso de **Project-based Matrix Authorization Strategy**:
-  - permissões por usuário/grupo por projeto;
-  - herança de permissões e segurança baseada em projeto.
-- Criação de jobs para aplicações PHP/Laravel + Node:
-  - parametrização com variável `BRANCH`;
-  - integração com Git interno (`http(s)://git.cobaia.exemplo.com/...`);
-  - passos de build típicos:
-    - `composer install`
-    - `npm install`
-    - `php artisan migrate`
-    - `php artisan optimize`
-    - `npm run build`.
+- Instalação e configuração de **Jenkins** em servidores Linux.
+- Criação de **pipelines freestyle** e pipelines declarativos simples.
+- Integração com **LDAP** para autenticação centralizada quando necessário.
+- Integração com **GitLab** para disparo de jobs em push/merge.
+- Ajustes de plugins, configuração de executores e manutenção de jobs em ambiente real.
 
 ---
 
 ## GitLab
 
-- Instalação e administração de instância **GitLab self-hosted**.  
-- Criação e manutenção de projetos, grupos e permissões.  
-- Configuração básica de **runners** (Shell / Docker) para CI/CD.  
+- Instalação e administração de instância **GitLab self-hosted**.
+- Criação e manutenção de **projetos, grupos e permissões**.
+- Configuração básica de **runners** (Shell / Docker) para CI/CD.
 - Integrações com ferramentas externas (SonarQube, Jenkins, etc.).
 
 ---
 
 ## Nginx
 
-- Instalação e administração de **Nginx** em servidores Linux.  
-- Configuração de **virtual hosts**, *reverse proxy* e HTTPS (TLS/SSL).  
-- Ajuste de **redirects**, *headers* e hardening básico.  
-- Automação de instalação/ativação via **scripts bash**.
+- Instalação e administração de **Nginx** em servidores Linux.
+- Configuração de **virtual hosts**, **reverse proxy** e **HTTPS (TLS/SSL)**.
+- Ajuste de redirects, headers (segurança, HSTS, etc.) e hardening básico.
+- Automação da instalação/ativação via scripts bash próprios.
 
 ---
 
 ## Apache HTTPD
 
-- Instalação e configuração do **Apache HTTP Server**.  
-- Criação de **vhosts**, proxy para aplicações (Tomcat/JBoss/PHP).  
-- Configuração de módulos (`rewrite`, `ssl`, `deflate` etc.).  
+- Instalação e configuração de **Apache HTTP Server**.
+- Criação de vhosts, reverse proxy para aplicações (Tomcat/JBoss/PHP).
+- Configuração de módulos (`rewrite`, `ssl`, `deflate`, etc.).
 - Comparação e migração de cenários **Nginx vs Apache** conforme necessidade da aplicação.
 
 ---
 
-## Balanceadores de Carga (Apache + mod_proxy / mod_jk)
+## Balanceadores de carga (Apache + mod_proxy / mod_jk)
 
-Configuração do **Apache** como balanceador de carga em dois cenários principais:
+Configuração do Apache como balanceador de carga em dois cenários principais:
 
-1. **HTTP/HTTPS usando `mod_proxy` / `mod_proxy_balancer`**  
-   - múltiplos backends (APIs, aplicações web, etc.);  
-   - definição de pools de backends, stickiness, health checks e logs dedicados.
+1. **HTTP/HTTPS com mod_proxy / mod_proxy_balancer**
+   - Balanceamento entre múltiplos backends (APIs, aplicações web).
+   - Configuração de pools, sticky sessions quando necessário e health-checks básicos.
+   - Criação de páginas de status e logs dedicados por aplicação.
 
-2. **Aplicações Java (Tomcat / JBoss) usando `mod_jk` e protocolo AJP 1.3**  
-   - configuração de workers e sticky session;  
-   - uso do **JK Status Manager** para monitorar e ajustar nós.
+2. **Aplicações Java (Tomcat / JBoss) com mod_jk (AJP 1.3)**
+   - Balanceamento via AJP 1.3, com sticky session e uso de **JK Status Manager**.
+   - Separação de logs, ajustes de timeouts e parâmetros do conector.
 
-Documentação interna sobre:
+Boas práticas:
 
-- hardening de Apache (headers de segurança, `MPM event`, compressão com `mod_deflate`);  
-- estratégias de escala vertical e horizontal dos balanceadores;  
-- proteção de interfaces administrativas (`/balancer-manager`, `/jkstatus`).
-
----
-
-## Certificados SSL/TLS e cadeia PEM
-
-- Preparação de certificados emitidos por Autoridades Certificadoras para uso em servidores Linux.  
-- Conversão de arquivos `.crt` e `.key` em:
-  - `fullchain.pem` (certificado do domínio + cadeia intermediária + raiz);
-  - `privkey.pem` (chave privada em formato PEM).
-- Verificação de certificados e chaves com **OpenSSL** antes de aplicar em produção.  
-- Aplicação prática em:
-  - servidores Apache e Nginx (HTTPS, reverse proxy, balanceadores);
-  - aplicações Java (Tomcat/XWiki/JBoss) expostas via proxy;
-  - outros serviços internos que exigem certificados válidos.
-- Automação parcial do processo via script `convert-cert-to-pem.sh`, padronizando a preparação
-  de certificados em múltiplos servidores.
+- Hardening de Apache (headers de segurança, MPM event, compressão com `mod_deflate`).
+- Estratégias de escala vertical e horizontal dos balanceadores.
+- Proteção de interfaces administrativas (`/balancer-manager`, `/jkstatus`).
 
 ---
 
-## Tomcat 9 (apps Java e SSL para APIs internas)
+## Tomcat
 
-- Instalação e configuração de **Apache Tomcat 9** em Linux.  
-- Deploy de aplicações Java (`.war`), ajuste de contextos e memória.  
-- Integração Tomcat + Nginx/Apache (incluindo cenários com `mod_jk` e `mod_proxy_balancer`).  
-- Configuração de **HTTPS direto no Tomcat 9** para APIs internas na porta 8443:
-  - uso de certificado wildcard `*.cobaia.exemplo.com`;
-  - configuração de `server.xml` com `certificateFile` (`fullchain.pem`)
-    e `certificateKeyFile` (chave privada);
-  - ajuste de permissões de arquivos de certificado para o usuário do serviço.
-- Troubleshooting básico (logs, HTTP 5xx, problemas de conexão e sessão).
+- Instalação e configuração de **Apache Tomcat** em Linux.
+- Deploy de aplicações Java (WAR), ajuste de contextos e parâmetros de memória (JVM).
+- Integração Tomcat + Nginx/Apache (incluindo cenários com mod_jk e mod_proxy_balancer).
+- Troubleshooting básico:
+  - análise de logs de aplicação;
+  - erros HTTP 5xx;
+  - problemas de conexão com backend e sessão.
 
 ---
 
 ## JBoss / WildFly
 
-- Instalação e configuração de instâncias **JBoss / WildFly** em Linux.  
-- Deploy de aplicações Java EE.  
-- Integração com Apache (`mod_jk` / HTTP) para exposição externa.  
+- Instalação e configuração de instâncias **JBoss / WildFly**.
+- Deploy de aplicações Java EE.
+- Integração com Apache (mod_jk / HTTP) para exposição externa.
 - Gestão de logs, datasources e parâmetros de JVM.
-- Configuração de **HTTPS na porta 8443** usando:
-  - conversão de `fullchain.pem` + `privkey.pem` em `certificado.p12` (PKCS12) e depois `certificado.jks` (JKS);
-  - ajuste de permissões do keystore (`chmod 600`, usuário/grupo do serviço);
-  - edição do `server.xml` para apontar para o novo `keystoreFile`, `keystorePass` e `keyAlias`.
+- Habilitação de HTTPS em aplicações monolíticas usando key/truststores.
 
 ---
 
 ## Zabbix
 
-- Instalação e configuração de **Zabbix Server** e agentes.  
-- Criação de hosts, templates e itens para monitoramento de servidores e serviços.  
-- Configuração de triggers e actions para alertas.  
-- Uso de dashboards para acompanhar saúde da infraestrutura.
+- Instalação e configuração de **Zabbix Server** e agentes.
+- Criação de hosts, templates e itens para monitoramento de servidores e serviços.
+- Configuração de **triggers** e **actions** para alertas.
+- Uso de dashboards para acompanhar a saúde da infraestrutura.
 
 ---
 
-## Scripts de Automação (PHP 7.4 + Oracle)
+## Scripts de automação (PHP 7.4 + Oracle)
 
-Criação de scripts em **bash** para automatizar instalação de:
+Criação de scripts em bash para automatizar a instalação de:
 
-- PHP 7.4 em Ubuntu 22.04+ e 24.04+;  
-- Oracle Instant Client (basic, sdk, sqlplus);  
+- **PHP 7.4** em Ubuntu 22.04+ e 24.04+;
+- **Oracle Instant Client** (basic, sdk, sqlplus);
 - extensões **OCI8** e **PDO_OCI** compiladas para PHP 7.4.33.
 
-Focados em ambientes legados que ainda dependem de PHP 7.4 com conexão Oracle,
-reduzindo tempo de instalação/reinstalação e padronizando o ambiente.
+Foco:
+
+- Ambientes legados que ainda dependem de PHP 7.4 com conexão Oracle.
+- Evitar repetição manual do processo de download, instalação e configuração.
+- Padronizar ambientes e reduzir erros humanos.
 
 ---
 
-## Resumo de atuação
+## Conversão e preparo de certificados
+
+- Conversão de certificados (`.crt`, `.key`, cadeia intermediária/raiz) para:
+  - `fullchain.pem`
+  - `privkey.pem`
+- Uso em:
+  - Nginx (`ssl_certificate`, `ssl_certificate_key`);
+  - Apache HTTPD (`SSLCertificateFile`, `SSLCertificateKeyFile`);
+  - serviços Java atrás de proxy (Tomcat, JBoss);
+  - balanceadores Apache/Nginx.
+- Criação de script para automatizar geração de `fullchain.pem` + `privkey.pem` a partir de certificados entregues pela Autoridade Certificadora.
+
+---
+
+## Labs e estudos práticos (Docker / Kubernetes)
+
+Além de serviços em produção, estou começando a registrar **labs** para praticar tecnologias modernas:
+
+- **Lab: aplicação web simples em Docker + Kubernetes (kind)**  
+  - App Flask mínima empacotada em Docker com imagem própria.  
+  - Cluster Kubernetes local criado com kind.  
+  - Deployment com réplicas, healthcheck via `/health` (readiness/liveness).  
+  - Service tipo NodePort e acesso usando `kubectl port-forward`.  
+  - Documentado em: `labs/hello-webapp-docker-k8s/README.md`.
+
+Esse tipo de laboratório mostra que, além de administrar ambientes tradicionais, estou evoluindo para trabalhar com containers e orquestração Kubernetes, mantendo o foco em Infra/DevOps.
+
+---
+
+## Resumo
 
 Atuação prática em:
 
-- Sistemas **Linux** em produção (Debian/Ubuntu, CentOS/RHEL) e **Windows Server**;  
-- Serviços web (Nginx, Apache, Tomcat, JBoss, XWiki);  
-- Ferramentas de CI/CD (Jenkins, GitLab);  
-- Monitoramento (Observium, Zabbix);  
-- Qualidade de código e integração com DevOps (SonarQube + GitLab);  
-- Balanceamento de carga com Apache (`mod_proxy`, `mod_proxy_balancer`, `mod_jk`);  
-- Integração PHP 7.4 + Oracle (OCI8/PDO_OCI) via scripts;  
-- Automação de tarefas rotineiras via scripts em shell;  
-- Operação e suporte de **mais de 100 servidores Linux e Windows** em conjunto.
+- Sistemas Linux em produção;
+- Serviços web (Nginx, Apache, Tomcat, JBoss, XWiki);
+- Ferramentas de CI/CD (Jenkins, GitLab);
+- Monitoramento (Observium, Zabbix);
+- Qualidade de código e integração com DevOps (SonarQube + GitLab);
+- Balanceamento de carga com Apache (`mod_proxy`, `mod_proxy_balancer`, `mod_jk`);
+- Integração PHP 7.4 + Oracle (OCI8/PDO_OCI) via scripts;
+- Automação de tarefas rotineiras via scripts em shell;
+- Início de práticas com Docker e Kubernetes aplicadas a cenários de Infra/DevOps.
 
-Este repositório **infra-study** registra meus estudos, laboratórios e resumos técnicos
-relacionados a essas tecnologias, funcionando como meu portfólio técnico em Infra / DevOps.
+Este portfólio resume o que já fiz e o tipo de problema que sei resolver hoje em ambiente de produção e em laboratórios próprios.
