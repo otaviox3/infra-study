@@ -27,24 +27,60 @@ jobs:
           cd labs/hello-webapp-docker-k8s
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest
+          pip install pytest pyyaml
 
       - name: Rodar testes
         run: |
           cd labs/hello-webapp-docker-k8s
           pytest
 
-      - name: Instalar kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: "latest"
-
-      - name: Validar manifests Kubernetes (dry-run=client, sem validar com cluster)
+      - name: Validar sintaxe YAML dos manifests Kubernetes
         run: |
           cd labs/hello-webapp-docker-k8s
-          kubectl apply --dry-run=client --validate=false -f k8s/
+          python - << 'EOF'
+          import glob, yaml, sys
+
+          erros = False
+          for path in glob.glob("k8s/*.yaml"):
+              print(f"Validando {path}...")
+              try:
+                  with open(path, "r", encoding="utf-8") as f:
+                      list(yaml.safe_load_all(f))
+                  print(f"OK: {path}")
+              except Exception as e:
+                  print(f"ERRO em {path}: {e}")
+                  erros = True
+
+          if erros:
+              sys.exit(1)
+          EOF
 
       - name: Build da imagem Docker
         run: |
           cd labs/hello-webapp-docker-k8s
           docker build -t hello-webapp:${{ github.sha }} .
+
+  k8s-apply:
+    runs-on: ubuntu-latest
+    needs: test-and-build   # só roda se o primeiro job passou
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: "latest"
+
+      - name: Criar cluster Kind
+        uses: helm/kind-action@v1
+        with:
+          cluster_name: hello-webapp-ci
+
+      - name: Aplicar manifests no cluster Kind
+        run: |
+          cd labs/hello-webapp-docker-k8s
+          kubectl apply -f k8s/
+          echo "---- Recursos aplicados ----"
+          kubectl get pods,svc -n default
