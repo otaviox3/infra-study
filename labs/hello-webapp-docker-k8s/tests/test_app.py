@@ -10,7 +10,15 @@ from app import app
 
 
 def test_health_endpoint():
+    """Garante que /health responde 200 e 'OK'."""
     client = app.test_client()
     resp = client.get("/health")
     assert resp.status_code == 200
     assert resp.data.decode() == "OK"
+
+
+def test_root_endpoint():
+    """Garante que / responde 200 (página inicial da app)."""
+    client = app.test_client()
+    resp = client.get("/")
+    assert resp.status_code == 200
