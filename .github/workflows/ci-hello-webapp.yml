@@ -39,10 +39,10 @@ jobs:
         with:
           version: "latest"
 
-      - name: Validar manifests Kubernetes (dry-run=client)
+      - name: Validar manifests Kubernetes (dry-run=client, sem validar com cluster)
         run: |
           cd labs/hello-webapp-docker-k8s
-          kubectl apply --dry-run=client -f k8s/
+          kubectl apply --dry-run=client --validate=false -f k8s/
 
       - name: Build da imagem Docker
         run: |
