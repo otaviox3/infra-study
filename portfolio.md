@@ -193,6 +193,10 @@ Além de serviços em produção, estou começando a registrar **labs** para pra
   - Deployment com réplicas, healthcheck via `/health` (readiness/liveness).  
   - Service tipo NodePort e acesso usando `kubectl port-forward`.  
   - Documentado em: `labs/hello-webapp-docker-k8s/README.md`.
+  - Pipeline de CI em GitHub Actions para esse lab:
+  - instalação de dependências Python;
+  - testes automatizados com pytest;
+  - build da imagem Docker a cada push/PR no diretório do lab.
 
 Esse tipo de laboratório mostra que, além de administrar ambientes tradicionais, estou evoluindo para trabalhar com containers e orquestração Kubernetes, mantendo o foco em Infra/DevOps.
 

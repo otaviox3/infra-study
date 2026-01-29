@@ -78,6 +78,9 @@ Laboratórios pensados para praticar conceitos modernos (Docker, Kubernetes, etc
 - [Lab: aplicação web simples em Docker + Kubernetes (kind)](labs/hello-webapp-docker-k8s/README.md)  
   App Flask mínima empacotada em Docker, com imagem própria, rodando em cluster Kubernetes local com kind, usando Deployment, Service (NodePort) e endpoint de healthcheck `/health`.
 
+- [CI do lab hello-webapp com GitHub Actions](docs/github-actions-hello-webapp-ci.md)  
+  Pipeline que instala dependências, roda testes com pytest e builda a imagem Docker a cada push/PR no lab `hello-webapp`.
+
 Novos labs serão adicionados à medida que eu for praticando mais coisas (por exemplo: bancos em Kubernetes, Ingress, logging centralizado, etc.).
 
 ---
