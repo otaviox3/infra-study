@@ -1,0 +1,40 @@
+name: CI - hello-webapp
+
+on:
+  push:
+    paths:
+      - "labs/hello-webapp-docker-k8s/**"
+      - ".github/workflows/ci-hello-webapp.yml"
+  pull_request:
+    paths:
+      - "labs/hello-webapp-docker-k8s/**"
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: |
+          cd labs/hello-webapp-docker-k8s
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Rodar testes
+        run: |
+          cd labs/hello-webapp-docker-k8s
+          pytest
+
+      - name: Build da imagem Docker
+        run: |
+          cd labs/hello-webapp-docker-k8s
+          docker build -t hello-webapp:${{ github.sha }} .
