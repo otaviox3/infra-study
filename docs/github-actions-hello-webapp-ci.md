@@ -1,14 +1,15 @@
-# CI para o lab hello-webapp com GitHub Actions
+# CI para o lab hello-webapp com GitHub Actions (com cluster Kind)
 
 Autor: **Otávio Azevedo**
 
-Este documento descreve o pipeline de **Integração Contínua (CI)** que configurei para o laboratório `labs/hello-webapp-docker-k8s`, usando **GitHub Actions**.
+Este documento descreve o pipeline de **Integra Integração Contínua (CI)** que configurei para o laboratório `labs/hello-webapp-docker-k8s`, usando **GitHub Actions**, testes automatizados, Docker e um cluster Kubernetes temporário com **Kind**.
 
-O objetivo é:
+O objetivo desse CI é:
 
-- garantir que a aplicação Flask do lab continua funcionando (testes automatizados);
-- buildar a imagem Docker a cada mudança relevante;
-- mostrar, no meu portfólio, que sei configurar um pipeline básico de CI em GitHub Actions.
+- garantir que a aplicação Flask do lab continua funcionando (testes com `pytest`);
+- verificar se os manifests Kubernetes estão bem formados (YAML válido);
+- garantir que o `Dockerfile` continua buildando;
+- **subir um cluster Kubernetes (Kind) dentro do pipeline** e aplicar os manifests nele.
 
 ---
 
@@ -29,22 +30,16 @@ labs/hello-webapp-docker-k8s/
   README.md
 ```
 
-A aplicação é um serviço Flask minimalista com:
+A aplicação é um serviço Flask com:
 
-- `/` → responde uma mensagem de texto simples;
-- `/health` → responde `OK` (usado como healthcheck).
+- `/` → página inicial simples (retorna HTTP 200).
+- `/health` → endpoint de healthcheck (retorna `"OK"` e status 200).
 
 ---
 
-## 2. Teste automatizado com pytest
+## 2. Testes automatizados com pytest
 
-Para garantir que o endpoint `/health` continua funcionando, criei o arquivo:
-
-```text
-labs/hello-webapp-docker-k8s/tests/test_app.py
-```
-
-Conteúdo (resumido):
+O arquivo de testes (`labs/hello-webapp-docker-k8s/tests/test_app.py`) contém dois testes principais:
 
 ```python
 import sys
@@ -59,38 +54,41 @@ from app import app
 
 
 def test_health_endpoint():
+    """Garante que /health responde 200 e 'OK'."""
     client = app.test_client()
     resp = client.get("/health")
     assert resp.status_code == 200
     assert resp.data.decode() == "OK"
+
+
+def test_root_endpoint():
+    """Garante que / responde 200 (página inicial da app)."""
+    client = app.test_client()
+    resp = client.get("/")
+    assert resp.status_code == 200
 ```
 
-O que esse teste faz:
+O que esses testes garantem:
 
-- ajusta o `sys.path` para que o Python consiga importar `app.py`;
-- cria um cliente de teste do Flask (`app.test_client()`);
-- chama a rota `/health`;
-- verifica que:
-  - o status HTTP é `200`;
-  - o corpo da resposta é o texto `"OK"`.
-
-Se essa rota quebrar no futuro (erro, mudança de retorno etc.), o pipeline de CI vai falhar e avisar.
+- a rota `/health` sempre responde:
+  - status HTTP 200;
+  - texto `"OK"`;
+- a rota `/` responde HTTP 200;
+- se qualquer uma dessas rotas quebrar no futuro, o CI falha.
 
 ---
 
-## 3. Workflow do GitHub Actions
+## 3. Quando o workflow roda
 
-O workflow do GitHub Actions fica em:
+O workflow está em:
 
 ```text
 .github/workflows/ci-hello-webapp.yml
 ```
 
-Conteúdo principal:
+E é disparado quando:
 
 ```yaml
-name: CI - hello-webapp
-
 on:
   push:
     paths:
@@ -99,7 +97,29 @@ on:
   pull_request:
     paths:
       - "labs/hello-webapp-docker-k8s/**"
+```
 
+Ou seja:
+
+- roda em qualquer `push` que altere arquivos dentro de `labs/hello-webapp-docker-k8s/**` ou o próprio workflow;
+- roda em qualquer `pull_request` que mexa nesse lab.
+
+Alterações em outras partes do repositório **não disparam** esse CI, evitando rodar pipeline sem necessidade.
+
+---
+
+## 4. Job 1 – `test-and-build`
+
+O primeiro job é responsável por:
+
+- preparar o ambiente de Python;
+- rodar os testes automatizados;
+- validar a sintaxe dos manifests Kubernetes (YAML);
+- buildar a imagem Docker da aplicação.
+
+Trecho principal:
+
+```yaml
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
@@ -118,12 +138,33 @@ jobs:
           cd labs/hello-webapp-docker-k8s
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest
+          pip install pytest pyyaml
 
       - name: Rodar testes
         run: |
           cd labs/hello-webapp-docker-k8s
           pytest
+
+      - name: Validar sintaxe YAML dos manifests Kubernetes
+        run: |
+          cd labs/hello-webapp-docker-k8s
+          python - << 'EOF'
+          import glob, yaml, sys
+
+          erros = False
+          for path in glob.glob("k8s/*.yaml"):
+              print(f"Validando {path}...")
+              try:
+                  with open(path, "r", encoding="utf-8") as f:
+                      list(yaml.safe_load_all(f))
+                  print(f"OK: {path}")
+              except Exception as e:
+                  print(f"ERRO em {path}: {e}")
+                  erros = True
+
+          if erros:
+              sys.exit(1)
+          EOF
 
       - name: Build da imagem Docker
         run: |
@@ -131,129 +172,115 @@ jobs:
           docker build -t hello-webapp:${{ github.sha }} .
 ```
 
-Explicando cada parte:
+### Explicando cada etapa
 
-### 3.1. Disparo do workflow
+- **Checkout do código**: baixa o repositório para o runner.
+- **Configurar Python**: garante Python 3.12 disponível.
+- **Instalar dependências**:
+  - instala Flask (`requirements.txt`);
+  - instala `pytest` e `pyyaml` para testes e validação de YAML.
+- **Rodar testes**:
+  - executa `pytest`;
+  - se algum teste falhar, o job falha e o pipeline para ali.
+- **Validar sintaxe YAML**:
+  - percorre todos os arquivos `k8s/*.yaml`;
+  - tenta carregar o YAML com `yaml.safe_load_all`;
+  - se algum arquivo estiver com sintaxe inválida (indentação errada, YAML quebrado, etc.), o job falha.
+- **Build da imagem Docker**:
+  - faz o build da imagem com o `Dockerfile` do lab;
+  - usa a tag `hello-webapp:<SHA do commit>`.
+
+---
+
+## 5. Job 2 – `k8s-apply` (cluster Kind no CI)
+
+O segundo job é responsável por:
+
+- subir um cluster Kubernetes temporário com **Kind** dentro do runner;
+- aplicar os manifests do lab (`k8s/deployment.yaml` e `k8s/service.yaml`) nesse cluster;
+- listar os pods e serviços criados.
+
+Trecho principal:
 
 ```yaml
-on:
-  push:
-    paths:
-      - "labs/hello-webapp-docker-k8s/**"
-      - ".github/workflows/ci-hello-webapp.yml"
-  pull_request:
-    paths:
-      - "labs/hello-webapp-docker-k8s/**"
-```
-
-- O workflow roda automaticamente em:
-  - qualquer `push` que altere arquivos do lab `hello-webapp` ou o próprio workflow;
-  - qualquer `pull_request` que mexa no lab.
-- Isso evita rodar CI desnecessariamente quando eu altero arquivos sem relação com esse lab.
-
-### 3.2. Job e runner
-
-```yaml
-jobs:
-  test-and-build:
+  k8s-apply:
     runs-on: ubuntu-latest
+    needs: test-and-build
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: "latest"
+
+      - name: Criar cluster Kind
+        uses: helm/kind-action@v1
+        with:
+          cluster_name: hello-webapp-ci
+
+      - name: Aplicar manifests no cluster Kind
+        run: |
+          cd labs/hello-webapp-docker-k8s
+          kubectl apply -f k8s/
+          echo "---- Recursos aplicados ----"
+          kubectl get pods,svc -n default
 ```
 
-- Define um único job chamado `test-and-build`.
-- Ele executa em um runner Linux gerenciado pelo próprio GitHub (`ubuntu-latest`).
+### Pontos importantes
 
-### 3.3. Checkout do código
+- **`needs: test-and-build`**:
+  - o job `k8s-apply` só roda se o job `test-and-build` tiver passado;
+  - se os testes falharem, se o YAML estiver inválido ou se o build Docker quebrar, o cluster nem é criado.
 
-```yaml
-- name: Checkout do código
-  uses: actions/checkout@v4
-```
+- **Instalar kubectl**:
+  - usa a action oficial `azure/setup-kubectl` para instalar o `kubectl` na VM.
 
-- Faz o download do conteúdo do repositório na máquina do runner para que os próximos passos possam acessar os arquivos.
+- **Criar cluster Kind**:
+  - usa a action `helm/kind-action` para subir um cluster Kubernetes *in Docker* chamado `hello-webapp-ci`;
+  - esse cluster existe apenas durante o job; ao final, o runner é descartado.
 
-### 3.4. Configuração do Python
+- **Aplicar manifests**:
+  - executa `kubectl apply -f k8s/` para criar Deployment e Service do lab;
+  - mostra um `kubectl get pods,svc` para registrar no log o que foi criado no cluster.
 
-```yaml
-- name: Configurar Python
-  uses: actions/setup-python@v5
-  with:
-    python-version: "3.12"
-```
+Mesmo que a aplicação use uma imagem que não está publicada em um registry público, o objetivo aqui é:
 
-- Garante que o runner tenha Python 3.12 instalado.
-- Isso é importante para a compatibilidade com Flask 3.x e pytest.
-
-### 3.5. Instalação das dependências
-
-```yaml
-- name: Instalar dependências
-  run: |
-    cd labs/hello-webapp-docker-k8s
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-    pip install pytest
-```
-
-- Entra na pasta do lab:
-  - instala/atualiza `pip`;
-  - instala as dependências da aplicação (Flask);
-  - instala o `pytest` para rodar os testes.
-
-### 3.6. Execução dos testes
-
-```yaml
-- name: Rodar testes
-  run: |
-    cd labs/hello-webapp-docker-k8s
-    pytest
-```
-
-- Roda a suíte de testes do lab.
-- Se qualquer teste falhar, o job é marcado como `failed` e o workflow fica vermelho, indicando problema na alteração.
-
-### 3.7. Build da imagem Docker
-
-```yaml
-- name: Build da imagem Docker
-  run: |
-    cd labs/hello-webapp-docker-k8s
-    docker build -t hello-webapp:${{ github.sha }} .
-```
-
-- Faz o build da imagem Docker da aplicação:
-  - usa o `Dockerfile` do lab;
-  - coloca tag com o SHA do commit (`hello-webapp:<commit>`).
-- Mesmo que a imagem não seja enviada para um registry ainda, o build já garante que o `Dockerfile` continua válido.
+- garantir que os manifests são aceitos pelo `kubectl`;
+- garantir que os tipos (`Deployment`, `Service`) e as versões de API estão corretos;
+- começar a praticar a ideia de **testar Kubernetes em um cluster real dentro do pipeline**.
 
 ---
 
-## 4. O que esse CI demonstra sobre minha experiência
+## 6. O que esse CI demonstra no meu perfil
 
-Com esse pipeline de CI configurado, eu mostro que:
+Com essa configuração, o pipeline mostra que eu sei:
 
-- sei estruturar um **lab real** com:
+- estruturar um lab completo com:
   - aplicação Flask;
-  - Dockerfile;
+  - imagem Docker;
   - manifests Kubernetes;
-  - testes automatizados em pytest;
-- consigo configurar **GitHub Actions** para:
-  - disparar workflows em eventos específicos (push/PR em diretórios específicos);
-  - preparar ambiente (Python + dependências);
-  - rodar testes automatizados e tratar falhas;
-  - buildar imagens Docker em um runner Linux;
-- estou acostumado a documentar o fluxo de CI de forma clara, voltada para Infra/DevOps.
+  - testes automatizados;
+- configurar **GitHub Actions** para:
+  - rodar testes Python com `pytest`;
+  - validar sintaxe de manifests YAML com `PyYAML`;
+  - buildar imagem Docker;
+  - criar um **cluster Kubernetes temporário com Kind** dentro do pipeline;
+  - aplicar manifests com `kubectl apply` em um cluster de teste.
 
-Esse tipo de configuração aparece com frequência em vagas de DevOps/Infra que usam GitHub como plataforma de código.
+Isso é exatamente o tipo de prática que aparece em vagas de DevOps/SRE/Platform Engineer, principalmente quando a empresa usa GitHub como plataforma de código e precisa garantir que:
+
+> “Se alguém mexer no serviço, o código, o Dockerfile e os manifests de Kubernetes continuam saudáveis.”
 
 ---
 
-## 5. Próximos passos possíveis
+## 7. Próximos passos possíveis
 
-Futuramente, posso evoluir este pipeline para:
+A partir desse CI, posso evoluir o lab para:
 
-- enviar a imagem Docker para um registry (GitHub Container Registry, Docker Hub, etc.);
-- adicionar mais testes (por exemplo, verificar conteúdo da página principal `/`);
-- adicionar um job separado para validação de manifests Kubernetes (`kubectl kustomize`, `kubeval`, `helm lint`, etc.);
-- usar matrix de versões (diferentes versões de Python ou de dependências).
-
-Por enquanto, este lab já cumpre bem o papel de mostrar **CI básico funcionando em GitHub Actions** para uma aplicação que eu mesmo criei e documentei.
+- publicar a imagem Docker em um registry (GitHub Container Registry, Docker Hub, etc.);
+- adicionar um passo que aguarda o Pod ficar em `Running` e falha se entrar em `CrashLoopBackOff`/`ImagePullBackOff`;
+- adicionar validação de melhores práticas de Kubernetes (por exemplo, ferramentas como `kubeconform`, `kubeval`, `datree`, `polaris`);
+- futuramente, adaptar o mesmo fluxo para clusters gerenciados (EKS, AKS, GKE), seguindo o mesmo conceito de aplicar manifests via CI/CD.
