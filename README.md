@@ -75,11 +75,8 @@ Objetivo: registrar e organizar meus estudos, laboratórios e resumos técnicos 
 
 Laboratórios pensados para praticar conceitos modernos (Docker, Kubernetes, etc.) sem perder o foco em infra/DevOps.
 
-- [Lab: aplicação web simples em Docker + Kubernetes (kind)](labs/hello-webapp-docker-k8s/README.md)  
-  App Flask mínima empacotada em Docker, com imagem própria, rodando em cluster Kubernetes local com kind, usando Deployment, Service (NodePort) e endpoint de healthcheck `/health`.
-
-- [CI do lab hello-webapp com GitHub Actions](docs/github-actions-hello-webapp-ci.md)  
-  Pipeline que instala dependências, roda testes com pytest e builda a imagem Docker a cada push/PR no lab `hello-webapp`.
+- [Lab: hello-webapp em Docker + Kubernetes + CI](labs/hello-webapp-docker-k8s/README.md)
+- [CI desse lab com GitHub Actions + cluster Kind](docs/github-actions-hello-webapp-ci.md)
 
 Novos labs serão adicionados à medida que eu for praticando mais coisas (por exemplo: bancos em Kubernetes, Ingress, logging centralizado, etc.).
 
